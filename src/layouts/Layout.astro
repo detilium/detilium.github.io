@@ -1,33 +1,30 @@
 ---
-type Props = {
-	title?: string;
-	description?: string;
-}
+import '../styles/global.css';
+import Nav from '../components/Nav.astro';
+
+type Props = { title?: string; description?: string; };
 
 const {
-	title = "Portfolio - Coming Soon",
-	description = "Portfilo coming soon."
+  title = "Portfolio - Coming Soon",
+  description = "Portfolio coming soon."
 } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="business" class="min-h-screen">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     <title>{title}</title>
-
-    <!-- Social preview (optional) -->
     <meta property="og:title" content={title} />
     <meta property="og:description" content="I’m building something new. Check back soon." />
     <meta property="og:type" content="website" />
   </head>
 
-  <body>
-    <div class="bg" aria-hidden="true"></div>
-
-    <main class="wrap">
+  <body class="min-h-screen bg-base-200 text-base-content">
+    <Nav />
+    <main class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-10">
       <slot />
     </main>
   </body>
