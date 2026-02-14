@@ -1,18 +1,43 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Portfolio coming soon." />
-  <title>Portfolio — Coming Soon</title>
+---
+import BaseLayout from '../layouts/Layout.astro';
 
-  <!-- Social preview (optional) -->
-  <meta property="og:title" content="Portfolio — Coming Soon" />
-  <meta property="og:description" content="I’m building something new. Check back soon." />
-  <meta property="og:type" content="website" />
+const name = 'Christian Haase';
+const email = 'chrhaase@icloud.com';
+const github = 'https://github.com/detilium';
+const linkedin = 'https://www.linkedin.com/in/chrhaase/';
+---
 
+<BaseLayout title="Portfolio — Coming Soon" description="Portfolio coming soon.">
+  <section class="card" role="region" aria-label="Portfolio coming soon">
+    <div class="badge">
+      <span class="dot" aria-hidden="true"></span>
+      <span>Now building - portfolio in progress</span>
+    </div>
+
+    <h1>Portfolio coming soon.</h1>
+    <p>
+      I’m currently putting together a focused set of projects and case studies.
+      Check back soon or reach out if you’d like to connect.
+    </p>
+
+    <div class="row">
+      <a class="btn" href={`mailto:${email}`} aria-label="Email me">✉️ Email</a>
+      <a class="btn" href={github} target="_blank" rel="noreferrer">🧩 GitHub</a>
+      <a class="btn" href={linkedin} target="_blank" rel="noreferrer">💼 LinkedIn</a>
+    </div>
+
+    <footer>
+      <span>© {new Date().getFullYear()} {name}</span>
+      <span class="sep">•</span>
+      <span>Hosted on GitHub Pages</span>
+      <span class="sep">•</span>
+      <span><a class="link" href={github} target="_blank" rel="noreferrer">Projects</a></span>
+    </footer>
+  </section>
+
+    {/* Page-scoped styles */}
   <style>
-    :root{
+    :global(:root){
       --bg: #0b0f19;
       --card: rgba(255,255,255,.06);
       --card-border: rgba(255,255,255,.12);
@@ -22,9 +47,9 @@
       --radius: 18px;
     }
 
-    * { box-sizing: border-box; }
-    html, body { height: 100%; }
-    body{
+    :global(html, body){ height: 100%; }
+
+    :global(body){
       margin: 0;
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
       color: var(--text);
@@ -32,8 +57,8 @@
       overflow-x: hidden;
     }
 
-    /* Animated glow background */
-    .bg {
+    /* The layout renders .bg and .wrap, so we need :global for those selectors too */
+    :global(.bg){
       position: fixed;
       inset: -40%;
       background:
@@ -47,17 +72,17 @@
       z-index: -1;
     }
 
-    @keyframes drift {
-      0%   { transform: translate(-2%, -1%) scale(1.02); }
-      50%  { transform: translate(2%, 1%)  scale(1.05); }
-      100% { transform: translate(-1%, 2%) scale(1.03); }
-    }
-
-    .wrap{
+    :global(.wrap){
       min-height: 100%;
       display: grid;
       place-items: center;
       padding: 32px 18px;
+    }
+
+    @keyframes drift {
+      0%   { transform: translate(-2%, -1%) scale(1.02); }
+      50%  { transform: translate(2%, 1%)  scale(1.05); }
+      100% { transform: translate(-1%, 2%) scale(1.03); }
     }
 
     .card{
@@ -156,53 +181,6 @@
       font-size: 13px;
     }
 
-    .sep{
-      opacity: .35;
-    }
+    .sep{ opacity: .35; }
   </style>
-</head>
-
-<body>
-  <div class="bg" aria-hidden="true"></div>
-
-  <main class="wrap">
-    <section class="card" role="region" aria-label="Portfolio coming soon">
-      <div class="badge">
-        <span class="dot" aria-hidden="true"></span>
-        <span>Now building — portfolio in progress</span>
-      </div>
-
-      <h1>Portfolio coming soon.</h1>
-      <p>
-        I’m currently putting together a focused set of projects and case studies.
-        Check back soon — or reach out if you’d like to connect.
-      </p>
-
-      <div class="row">
-        <!-- Replace email + links -->
-        <a class="btn" href="mailto:chrhaase@icloud.com" aria-label="Email me">
-          ✉️ Email
-        </a>
-        <a class="btn" href="https://github.com/detilium" target="_blank" rel="noreferrer">
-          🧩 GitHub
-        </a>
-        <a class="btn" href="https://www.linkedin.com/in/chrhaase/" target="_blank" rel="noreferrer">
-          💼 LinkedIn
-        </a>
-      </div>
-
-      <footer>
-        <span>© <span id="year"></span> Christian Haase</span>
-        <span class="sep">•</span>
-        <span>Hosted on GitHub Pages</span>
-        <span class="sep">•</span>
-        <span><a class="link" href="https://github.com/detilium" target="_blank" rel="noreferrer">Projects</a></span>
-      </footer>
-    </section>
-  </main>
-
-  <script>
-    document.getElementById("year").textContent = new Date().getFullYear();
-  </script>
-</body>
-</html>
+</BaseLayout>
