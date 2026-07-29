@@ -1,0 +1,37 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getCollection } from "astro:content";
+
+export async function getStaticPaths() {
+  const projects = await getCollection("projects");
+  return projects.map((p) => ({ params: { slug: p.slug } }));
+}
+
+const { slug } = Astro.params;
+const projects = await getCollection("projects");
+const project = projects.find((p) => p.slug === slug);
+if (!project) throw new Error("Project not found");
+
+const { Content } = await project.render();
+---
+
+<Layout title={project.data.title}>
+  <article class="prose prose-lg max-w-none">
+    {
+      project.data.cover ? (
+        <figure class="mb-6">
+          <img
+            src={project.data.cover}
+            alt={project.data.title}
+            class="w-full object-contain"
+            loading="lazy"
+          />
+        </figure>
+      ) : null
+    }
+
+    <h1>{project.data.title}</h1>
+    <p>{project.data.summary}</p>
+    <Content />
+  </article>
+</Layout>

@@ -1,12 +1,17 @@
 ---
-import '../styles/global.css';
-import Nav from '../components/Nav.astro';
+import "../styles/global.css";
+import Nav from "../components/Nav.astro";
 
-type Props = { title?: string; description?: string; };
+type Props = {
+  title?: string;
+  description?: string;
+  fullBleed?: boolean;
+};
 
 const {
   title = "Portfolio - Coming Soon",
-  description = "Portfolio coming soon."
+  description = "Portfolio coming soon.",
+  fullBleed = false,
 } = Astro.props;
 ---
 
@@ -18,14 +23,120 @@ const {
     <meta name="description" content={description} />
     <title>{title}</title>
     <meta property="og:title" content={title} />
-    <meta property="og:description" content="I’m building something new. Check back soon." />
+    <meta
+      property="og:description"
+      content="I’m building something new. Check back soon."
+    />
     <meta property="og:type" content="website" />
   </head>
 
-  <body class="min-h-screen bg-base-200 text-base-content">
+  <body class="min-h-screen text-base-content">
+    <!-- Background grid (guaranteed visible) -->
+    <div class="pointer-events-none fixed inset-0 z-[-1] overflow-hidden">
+      <div class="bg-grid"></div>
+      <div class="bg-grid-fade"></div>
+    </div>
+
     <Nav />
-    <main class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-10">
-      <slot />
-    </main>
+
+    {
+      fullBleed ? (
+        <main class="w-full">
+          <slot />
+        </main>
+      ) : (
+        <main class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-10">
+          <slot />
+        </main>
+      )
+    }
+
+    <style>
+      /* Dark-theme tech grid: light minor lines + accent major lines + nodes */
+      .bg-grid {
+        position: absolute;
+        inset: 0;
+        opacity: 0.42; /* tune: 0.30–0.50 for dark */
+        pointer-events: none;
+
+        background-image:
+      /* minor grid (light) */
+          linear-gradient(
+            to right,
+            rgba(59, 130, 246, 0.34) 1px,
+            transparent 1px
+          ),
+          linear-gradient(
+            to bottom,
+            rgba(34, 211, 238, 0.3) 1px,
+            transparent 1px
+          ),
+          /* major grid (accent) */
+          linear-gradient(
+              to right,
+              rgba(99, 102, 241, 0.34) 1px,
+              transparent 1px
+            ),
+          linear-gradient(
+            to bottom,
+            rgba(168, 85, 247, 0.3) 1px,
+            transparent 1px
+          ),
+          /* nodes */
+          radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+          /* soft beams */
+          radial-gradient(
+              circle at 18% 18%,
+              rgba(59, 130, 246, 0.22),
+              transparent 55%
+            ),
+          radial-gradient(
+            circle at 82% 28%,
+            rgba(34, 211, 238, 0.2),
+            transparent 55%
+          );
+
+        background-size:
+          18px 18px,
+          18px 18px,
+          /* minor */ 72px 72px,
+          72px 72px,
+          /* major */ 18px 18px,
+          /* nodes */ 900px 900px,
+          900px 900px; /* beams */
+
+        background-position: 0 0;
+      }
+
+      /* Fade layer: keep it much lighter on dark themes */
+      .bg-grid-fade {
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(
+            circle at 50% 10%,
+            rgba(0, 0, 0, 0) 0%,
+            rgba(0, 0, 0, 0.18) 65%,
+            rgba(0, 0, 0, 0.28) 100%
+          ),
+          linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2));
+        opacity: 0.25; /* lower than before so the grid isn't killed */
+        pointer-events: none;
+      }
+
+      @media (min-width: 1024px) {
+        .bg-grid {
+          opacity: 0.38;
+          background-size:
+            20px 20px,
+            20px 20px,
+            80px 80px,
+            80px 80px,
+            20px 20px,
+            1100px 1100px,
+            1100px 1100px;
+        }
+      }
+    </style>
   </body>
 </html>

@@ -1,8 +1,568 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import { Github, Linkedin, Mail } from "lucide-astro";
+import { contact } from "../data/contact";
+
+const title = "Software Engineer";
+const location = "Esbjerg, Denmark";
+
+const careerStartDate = new Date("2016-02-01T00:00:00Z");
+const today = new Date();
+
+let experienceYears = today.getUTCFullYear() - careerStartDate.getUTCFullYear();
+
+const anniversaryHasPassed =
+  today.getUTCMonth() > careerStartDate.getUTCMonth() ||
+  (today.getUTCMonth() === careerStartDate.getUTCMonth() &&
+    today.getUTCDate() >= careerStartDate.getUTCDate());
+
+if (!anniversaryHasPassed) {
+  experienceYears--;
+}
+
+const summary = [
+  `I’m ${contact.name}, a ${title} bringing ${experienceYears} years of professional engineering experience to game development. I build gameplay systems and engine-side foundations in Unreal Engine C++, emphasizing readable, maintainable, and performance-minded code.`,
+  `I enjoy turning gameplay ideas into flexible, data-driven systems and creating the tools and workflows that make iteration faster and debugging easier.`,
+  `My work spans professional projects, independent releases, and experiments—from polished player-facing features to the underlying architecture that keeps them easy to extend.`,
+];
+
+const pillars = [
+  {
+    title: "Gameplay programming",
+    body: "Building gameplay features and reusable systems in Unreal Engine C++, from early prototypes to polished implementations.",
+    tags: ["Unreal Engine", "C++", "Gameplay Systems", "Prototyping"],
+  },
+  {
+    title: "Modular game architecture",
+    body: "Designing clear boundaries between features using subsystems, components, plugins, and data-driven patterns that keep projects easy to extend.",
+    tags: ["Subsystems", "Components", "Plugins", "Data-Driven Design"],
+  },
+  {
+    title: "Tools & iteration",
+    body: "Creating engine-side tools, debugging workflows, and developer-facing utilities that shorten feedback loops and make gameplay easier to inspect.",
+    tags: ["Developer Tooling", "Editor Workflows", "Debugging", "Iteration"],
+  },
+  {
+    title: "Performance & reliability",
+    body: "Writing performance-minded code, investigating runtime issues, and building gameplay systems that behave predictably under production conditions.",
+    tags: ["Profiling", "Optimization", "Diagnostics", "Stability"],
+  },
+  {
+    title: "Production-minded development",
+    body: `Applying ${experienceYears} years of software engineering experience to game development through clear conventions, useful documentation, automated workflows, and thoughtful code reviews.`,
+    tags: ["CI/CD", "Documentation", "Code Review", "Team Workflows"],
+  },
+];
+
+const roles = [
+  {
+    title: "Software Engineer",
+    org: "Det Faglige Hus",
+    logo: "/images/companies/detfagligehus.jpeg",
+    period: "2023 – Now",
+    blurb:
+      "After two years as team lead, I stepped back into a full-time engineering role to focus on building and maintaining internal .NET applications and REST APIs. I drive high-quality, security-focused development through coding standards and security procedures, modernize legacy systems, and support operations by managing Redis Sentinel/RabbitMQ clusters and Azure DevOps, as well as improving cross-team collaboration through better documentation and observability tooling.",
+    bullets: [
+      "Design, implementation and maintenance of .NET MVC applications and REST APIs (.NET Framework, .NET 6, .NET 8).",
+      "Integrations with various database technologies (MSSQL, MongoDB, Oracle) using frameworks like Entity Framework and Dapper.",
+      "Ensuring high quality coding practices.",
+      "Ensuring secure code practices.",
+      "Setup and maintenance of Redis & RabbitMQ clusters on Windows and RHEL Linux environments.",
+      "Azure DevOps administrator: CI/CD pipelines, code repositories, and project boards.",
+    ],
+  },
+  {
+    title: "Team Lead",
+    org: "Det Faglige Hus",
+    logo: "/images/companies/detfagligehus.jpeg",
+    period: "2022 – 2023",
+    blurb:
+      "I led a team of six software developers, owning delivery coordination, technical quality, and stakeholder communication. Alongside my leadership responsibilities, I pursued formal leadership education to strengthen my communication and organizational understanding, and I drove improvements in agile practices, team development, and continuous process optimization.",
+    bullets: [
+      "Management of skills development initiatives.",
+      "Fostering employee motivation through regular feedback and recognition.",
+      "Coordination and prioritization of tasks while managing resource allocation.",
+      "Mentoring and coaching team members to enhance well-being and performance.",
+      "Focus on continuous improvement and process optimization",
+    ],
+  },
+  {
+    title: "Team coordinator",
+    org: "Det Faglige Hus",
+    logo: "/images/companies/detfagligehus.jpeg",
+    period: "2021 – 2022",
+    blurb:
+      "I coordinated work across a team of six developers, representing the team in stakeholder reviews and translating business needs into clear technical specifications. I helped shape project plans and technology stack decisions, removed blockers, and kept a strong focus on quality and standardization while still contributing hands-on development when needed.",
+    bullets: [
+      "Coordination of development tasks & activities.",
+      "Planning & resource allocations.",
+      "Removal of obstacles and minimization of distractions to keep the team focused and productive.",
+      "Ensuring focus on quality & standardization while maintaining momentum.",
+    ],
+  },
+  {
+    title: "Software Engineer",
+    org: "Det Faglige Hus",
+    logo: "/images/companies/detfagligehus.jpeg",
+    period: "2017 – 2021",
+    blurb:
+      "I built and maintained a range of internal systems at Det Faglige Hus, spanning .NET MVC apps and REST APIs, plus AngularJS/Vue web apps and Umbraco CMS solutions. I contributed to our transition toward a .NET Core microservice architecture and helped modernize legacy systems, while also supporting the adoption of Scrum and acting as Scrum Master on several projects.",
+    bullets: [
+      "Development & maintenance of .NET MVC applications and REST APIs",
+      "Optimization & modernization of legacy systems.",
+    ],
+  },
+  {
+    title: "Junior developer",
+    org: "WorkPoint A/S",
+    logo: "/images/companies/workpoint.jpeg",
+    period: "2016 – 2017",
+    blurb:
+      "I worked on a customer portal with modules for user and license management, improving stability and usability.",
+    bullets: [
+      "Developed and optimized a customer portal, including modules for user and license management.",
+    ],
+  },
+];
+
+const certifications = [
+  {
+    course: "Secure Coding Techniques using .NET",
+    issuer: "CQURE",
+    issuerLogo: "/images/certificate-issuers/cqure.jpeg",
+    issued: "dec. 2024",
+    certificates: [
+      {
+        label: "Certificate of completion",
+        url: "https://www.credential.net/de4a317c-8416-4be9-8d71-5d867bd2999b#acc.WPGIYZKA",
+      },
+    ],
+    tags: [".NET", "AppSec"],
+  },
+  {
+    course: "Ultimate C++",
+    issuer: "Code With Mosh",
+    issuerLogo: "/images/certificate-issuers/codewithmosh.jpeg",
+    issued: "apr. 2024",
+    certificates: [
+      {
+        label: "Ultimate C++ - Part 1 Fundamentals - Certificate.pdf",
+        url: "/certificates/Ultimate C++ - Part 1 Fundamentals - Certificate.pdf",
+      },
+      {
+        label: "Ultimate C++ - Part 2 Intermediate - Certificate.pdf",
+        url: "/certificates/Ultimate C++ - Part 2 Intermediate - Certificate.pdf",
+      },
+      {
+        label: "Ultimate C++ - Part 3 Advanced - Certificate.pdf",
+        url: "/certificates/Ultimate C++ - Part 3 Advanced - Certificate.pdf",
+      },
+    ],
+    tags: ["C++"],
+  },
+  {
+    course: "Complete Blender Creator",
+    issuer: "GameDev.tv",
+    issuerLogo: "/images/certificate-issuers/gamedevtv.png",
+    issued: "jul. 2024",
+    certificates: [
+      {
+        label: "Certificate of completion",
+        url: "https://www.udemy.com/certificate/UC-cf690adb-753e-4e38-9535-0c97b5dc638b",
+      },
+    ],
+    tags: ["Blender", "3D Modeling"],
+  },
+  {
+    course: "Unreal Engine 5 C++ Developer",
+    issuer: "GameDev.tv",
+    issuerLogo: "/images/certificate-issuers/gamedevtv.png",
+    issued: "may 2024",
+    certificates: [
+      {
+        label: "Certificate of completion",
+        url: "https://www.udemy.com/certificate/UC-8a9de289-bb5a-43c5-a404-ee01b21d9cc2",
+      },
+    ],
+    tags: ["Unreal Engine", "C++"],
+  },
+  {
+    course: "Professional Scrum Master I (PSM I)",
+    issuer: "Scrum.org",
+    issuerLogo: "/images/certificate-issuers/scrumorg.jpeg",
+    issued: "apr. 2021",
+    certificates: [
+      {
+        label: "Professional Scrum Master I (PSM I)",
+        url: "https://www.scrum.org/user/735127",
+      },
+    ],
+    tags: ["Scrum", "Agile", "Project management"],
+  },
+];
+
+const education = [
+  {
+    title: "Management in practice",
+    org: "SmartAcademy",
+    period: "2022",
+  },
+  {
+    title: "Organization & work psychology",
+    org: "SmartAcademy",
+    period: "2022",
+  },
+  {
+    title: "Professional Scrum Master I",
+    org: "Scrum.org",
+    period: "2021",
+  },
+  {
+    title: "AP Degree (Academy Profession) in Computer Science",
+    org: "Business academy SouthWest",
+    period: "2013 – 2016",
+  },
+];
+
+const traits = [
+  "Structured",
+  "Responsible",
+  "Curious",
+  "Detail-oriented",
+  "Goal-oriented",
+  "Proactive",
+  "Helpful",
+  "Quick learner",
+  "Engaged",
+  "Optimistic",
+];
 ---
 
 <Layout title="About">
-  <h1 class="text-3xl font-bold">About</h1>
-  <p class="mt-3 opacity-80">Coming soon.</p>
+  <section class="mx-auto max-w-5xl px-4 py-10 md:py-14">
+    <!-- Header -->
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-2 md:items-stretch">
+      {/* Left: big image */}
+      <div class="flex items-center justify-center">
+        <figure class="w-full">
+          <img
+            src="/images/me.jpg"
+            alt={contact.name}
+            loading="lazy"
+            class="w-full max-h-[520px] object-cover rounded-box border border-base-300"
+          />
+        </figure>
+      </div>
+
+      <div class="flex flex-col justify-center gap-4">
+        <div class="space-y-1">
+          <h1 class="text-3xl font-bold tracking-tight md:text-4xl">About</h1>
+          <p class="text-base-content/80 text-lg">
+            {contact.name} · {location}
+          </p>
+        </div>
+
+        <div class="space-y-3">
+          {
+            summary.map((p) => (
+              <p class="text-base-content/80 leading-relaxed">{p}</p>
+            ))
+          }
+        </div>
+
+        <div class="flex flex-wrap gap-2 pt-2">
+          <a
+            class="btn btn-ghost btn-sm"
+            href={contact.linkedin}
+            target="_blank"
+            rel="noreferrer"
+            aria-label="LinkedIn"
+          >
+            <Linkedin class="h-4 w-4" />
+            LinkedIn
+          </a>
+
+          <a
+            class="btn btn-ghost btn-sm"
+            href={contact.emailHref}
+            aria-label="Email"
+          >
+            <Mail class="h-4 w-4" />
+            Email
+          </a>
+
+          <a
+            class="btn btn-ghost btn-sm"
+            href={contact.github}
+            target="_blank"
+            rel="noreferrer"
+            aria-label="GitHub"
+          >
+            <Github class="h-4 w-4" />
+            GitHub
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pillars -->
+    <div class="mt-10 grid grid-cols-1 gap-4 md:mt-12 md:grid-cols-2">
+      {
+        pillars.map((p) => (
+          <div class="card border border-base-300 bg-base-100 shadow-sm">
+            <div class="card-body">
+              <h2 class="card-title text-lg">{p.title}</h2>
+              <p class="text-base-content/80">{p.body}</p>
+              <div class="mt-3 flex flex-wrap gap-2">
+                {p.tags.map((t) => (
+                  <span class="badge badge-ghost">{t}</span>
+                ))}
+              </div>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+
+    <!-- Experience -->
+    <div class="mt-10 md:mt-12">
+      <h2 class="text-2xl font-bold tracking-tight">Experience</h2>
+
+      <div class="mt-6">
+        <ul
+          class="timeline timeline-snap-icon timeline-compact timeline-vertical"
+        >
+          {
+            roles.map((r, i) => {
+              const [startRaw, endRaw] = (r.period ?? "")
+                .split(/-|–|—/)
+                .map((s) => s.trim());
+
+              const start = startRaw || "";
+              const end = endRaw || "Now";
+
+              return (
+                <li>
+                  {/* Content always on the right side */}
+                  <div
+                    class="timeline-end mb-10"
+                    style="width: calc(100% - 4px)"
+                  >
+                    <div class="card w-full border border-base-300 bg-base-100 shadow-sm">
+                      <div class="card-body py-4">
+                        <div class="flex flex-col justify-between gap-1 md:flex-row md:items-baseline">
+                          <h3 class="text-lg font-semibold">{r.title}</h3>
+
+                          <div class="text-sm text-base-content/70 flex items-center gap-2">
+                            <div class="avatar">
+                              <div class="w-5 rounded bg-base-200 p-[2px] ring-1 ring-base-300">
+                                {r.logo ? (
+                                  <img
+                                    src={r.logo}
+                                    alt={`${r.org} logo`}
+                                    loading="lazy"
+                                  />
+                                ) : (
+                                  <span class="text-[10px] font-semibold text-base-content/70 flex h-full w-full items-center justify-center">
+                                    {r.org?.slice(0, 1)?.toUpperCase()}
+                                  </span>
+                                )}
+                              </div>
+                            </div>
+
+                            <span>{r.org}</span>
+                          </div>
+                        </div>
+
+                        {r.blurb ? (
+                          <p class="mt-2 text-base-content/80 leading-relaxed">
+                            {r.blurb}
+                          </p>
+                        ) : null}
+
+                        <ul class="mt-3 space-y-2">
+                          {r.bullets.map((b) => (
+                            <li class="flex gap-2">
+                              <span class="mt-[2px] inline-flex h-5 w-5 items-center justify-center rounded-full bg-primary/15 text-primary">
+                                ✓
+                              </span>
+                              <span class="text-base-content/80">{b}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Left timeline column: stacked years + marker */}
+                  <div class="timeline-middle relative">
+                    <div class="absolute left-1/2 -translate-x-1/2 -translate-y-5">
+                      <time class="badge badge-ghost font-mono text-[10px] whitespace-nowrap">
+                        {start} – {end}
+                      </time>
+                    </div>
+                  </div>
+
+                  <hr />
+                </li>
+              );
+            })
+          }
+        </ul>
+      </div>
+    </div>
+
+    <!-- Certifications -->
+    <div class="mt-10 md:mt-12">
+      <h2 class="text-2xl font-bold tracking-tight">Certifications</h2>
+      <p class="mt-1 text-base-content/70">Courses and certifications.</p>
+
+      <div class="mt-4 grid grid-cols-1 gap-4">
+        {
+          certifications.map((c) => (
+            <div class="card border border-base-300 bg-base-100 shadow-sm">
+              <div class="card-body">
+                <div class="flex items-start gap-3">
+                  <div class="avatar placeholder">
+                    <div class="w-10 rounded bg-base-200 ring-1 ring-base-300 flex items-center justify-center">
+                      {c.issuerLogo ? (
+                        <img
+                          src={c.issuerLogo}
+                          alt={`${c.issuer} logo`}
+                          loading="lazy"
+                        />
+                      ) : (
+                        <span class="text-sm font-semibold text-base-content/70">
+                          {c.issuer?.slice(0, 1)?.toUpperCase()}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+
+                  <div class="min-w-0">
+                    <h3 class="font-semibold">{c.course}</h3>
+                    <div class="text-sm text-base-content/70">
+                      {c.issuer}
+                      {c.issued ? ` · ${c.issued}` : ""}
+                    </div>
+                  </div>
+                </div>
+
+                {c.tags?.length ? (
+                  <div class="mt-3 flex flex-wrap gap-2">
+                    {c.tags.map((t) => (
+                      <span class="badge badge-ghost">{t}</span>
+                    ))}
+                  </div>
+                ) : null}
+
+                {c.certificates?.length ? (
+                  <div class="mt-4 flex flex-wrap gap-2">
+                    {c.certificates.map((cert) => (
+                      <a
+                        class="btn btn-soft btn-default btn-sm"
+                        href={cert.url}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        {cert.label}
+                      </a>
+                    ))}
+                  </div>
+                ) : null}
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+
+    <!-- Education -->
+    <div class="mt-10 md:mt-12">
+      <h2 class="text-2xl font-bold tracking-tight">Education & courses</h2>
+
+      <div class="mt-6">
+        <ul
+          class="timeline timeline-snap-icon timeline-compact timeline-vertical"
+        >
+          {
+            education.map((e, i) => {
+              const [startRaw, endRaw] = (e.period ?? "")
+                .split(/-|–|—/)
+                .map((s) => s.trim());
+
+              const start = startRaw || "";
+              const end = endRaw || "Now";
+
+              return (
+                <li>
+                  {i !== 0 ? <hr /> : null}
+
+                  {/* Content always on the right */}
+                  <div class="timeline-end mb-10">
+                    <div class="card border border-base-300 bg-base-100 shadow-sm">
+                      <div class="card-body py-4">
+                        <h3 class="text-lg font-semibold">{e.title}</h3>
+                        <div class="text-sm text-base-content/70">{e.org}</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Left timeline column: inline period + marker */}
+                  <div class="timeline-middle relative">
+                    <div class="absolute left-1/2 -translate-x-1/2 -translate-y-5">
+                      <time class="badge badge-ghost font-mono text-[10px] whitespace-nowrap">
+                        {start} – {end}
+                      </time>
+                    </div>
+                  </div>
+
+                  <hr />
+                </li>
+              );
+            })
+          }
+        </ul>
+      </div>
+    </div>
+
+    <!-- Traits -->
+    <div class="mt-10 md:mt-12">
+      <div class="card border border-base-300 bg-base-200/40 shadow-sm">
+        <div class="card-body">
+          <h2 class="card-title text-xl">How I show up on a team</h2>
+          <p class="text-base-content/80">
+            I’m happiest in environments where quality and momentum coexist:
+            clear standards, good collaboration, and a culture of sharing
+            knowledge.
+          </p>
+
+          <div class="mt-4 flex flex-wrap gap-2">
+            {traits.map((t) => <span class="badge badge-ghost">{t}</span>)}
+          </div>
+
+          <div class="alert alert-info mt-5">
+            <span>
+              If you’re looking for a programmer who can own systems end-to-end
+              — from design and implementation to documentation and operational
+              thinking — I’d love to connect.
+            </span>
+          </div>
+
+          <div class="mt-4 flex flex-wrap gap-2">
+            <a class="btn btn-primary" href={contact.emailHref}
+              ><Mail class="h-4 w-4" />Get in touch</a
+            >
+            <a
+              class="btn btn-ghost"
+              href={contact.linkedin}
+              target="_blank"
+              rel="noreferrer"
+              ><Linkedin class="h-4 w-4" />Connect on LinkedIn</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 </Layout>

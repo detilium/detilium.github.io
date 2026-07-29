@@ -1,8 +1,108 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+import { ArrowRight } from "lucide-astro";
+import { getCollection } from "astro:content";
+
+const projects = (await getCollection("projects")).filter((p) => !p.data.draft);
+
+console.log(projects.length);
+
+type Category = "indie" | "professional" | "labs";
+const categoryOrder: Category[] = ["indie", "professional", "labs"];
+
+const categoryLabels: Record<Category, string> = {
+  indie: "Independent Releases",
+  professional: "Professional",
+  labs: "Labs",
+};
+
+const categoryDescriptions: Record<Category, string> = {
+  indie:
+    "Games, add-ons, and other projects I've built and released independently.",
+  professional:
+    "Games and interactive experiences I've contributed to professionally.",
+  labs: "Game jams, prototypes, and experiments exploring new mechanics and ideas.",
+};
+
+const grouped = projects.reduce(
+  (acc, p) => {
+    const cat = p.data.category as Category;
+    (acc[cat] ??= []).push(p);
+    return acc;
+  },
+  {} as Record<Category, any[]>,
+);
 ---
 
 <Layout title="Projects">
-  <h1 class="text-3xl font-bold">Projects</h1>
-  <p class="mt-3 opacity-80">Coming soon.</p>
+  <section class="mx-auto max-w-6xl px-4 py-10">
+    <div class="space-y-10">
+      {
+        categoryOrder.map((cat) => {
+          const items = grouped[cat] ?? [];
+          if (!items.length) return null;
+
+          return (
+            <section>
+              <div class="mb-4">
+                <h1 class="text-2xl font-bold tracking-tight">
+                  {categoryLabels[cat]}
+                </h1>
+                <p class="text-base-content/70 mt-1">
+                  {categoryDescriptions[cat]}
+                </p>
+              </div>
+
+              <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {items.map((p) => (
+                  <a
+                    class="card card-border bg-base-100 shadow-sm hover:shadow-md transition-shadow"
+                    href={`/projects/${p.slug}`}
+                  >
+                    {p.data.thumbnail ? (
+                      <figure>
+                        <img
+                          src={p.data.thumbnail}
+                          alt={p.data.title}
+                          class="h-44 w-full object-cover"
+                          loading="lazy"
+                        />
+                      </figure>
+                    ) : null}
+
+                    <div class="card-body">
+                      <h3 class="card-title">{p.data.title}</h3>
+                      <div class="flex gap-2">
+                        {p.data.repo ? (
+                          <span class="badge badge-sm">Repo</span>
+                        ) : null}
+                        {p.data.demo ? (
+                          <span class="badge badge-sm">Demo</span>
+                        ) : null}
+                      </div>
+                      <p class="text-base-content/80">{p.data.summary}</p>
+
+                      {p.data.tags?.length ? (
+                        <div class="mt-3 flex flex-wrap gap-2">
+                          {p.data.tags.slice(0, 6).map((t: string) => (
+                            <span class="badge badge-ghost">{t}</span>
+                          ))}
+                        </div>
+                      ) : null}
+
+                      <div class="card-actions mt-4 justify-between items-center">
+                        <span class="btn btn-neutral btn-sm">
+                          Read more <ArrowRight class="h-4 w-4" />
+                        </span>
+                      </div>
+                    </div>
+                  </a>
+                ))}
+              </div>
+            </section>
+          );
+        })
+      }
+    </div>
+  </section>
 </Layout>
